@@ -228,7 +228,7 @@ func (response *Response) createStructResponse(value reflect.Value, depth int) i
 		fieldType := value.Type().Field(i)
 		fieldValue := value.Field(i)
 
-		if fieldType.Anonymous {
+		if fieldType.Anonymous && fieldType.PkgPath == "" {
 			embeddedResponse := response.createResponse(fieldValue.Interface(), depth).(objx.Map)
 			for key, value := range embeddedResponse {
 				// Don't overwrite values from the base struct
